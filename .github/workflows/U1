@@ -1,0 +1,54 @@
+Private Sub UserForm_Repaint()
+    Dim uToken As LongPtr, gdiInput As GdiplusStartupInput
+    Dim hGraphics As LongPtr, hBrush As LongPtr
+    Dim hdc As LongPtr, uououo As Long
+    Dim cellColor As Long, argbColor As Long
+    For R = 1 To 540
+        For c = 1 To 900
+            uououo = Sheets("工作表9").Cells(R, c).Value
+            Select Case uououo
+                Case 1
+                Case 2
+                Case 3
+                Case 4
+                Case 5
+                Case 6
+                Case 7
+                Case 8
+                Case 9
+                Case 10
+                Case 11
+                Case 12
+                Case 13
+                Case 14
+                Case 15
+                Case 16
+                Case 17
+                Case 18
+                Case 19
+                Case 20
+                Case 21
+                Case 22
+            End Select
+            ' 2. 啟動 GDI+
+            gdiInput.GdiplusVersion = 1
+            GdiplusStartup uToken, gdiInput, 0
+     
+            ' 3. 取得表單的繪圖層 (hDC)
+            ' 注意：這裡使用 Me.Caption 查找窗口或簡單用 GetDC(0) 獲取，
+            ' 推薦在 UserForm 啟動時先取得視窗 hWnd
+            hdc = GetDC(0) ' 這裡僅作示範，實務上需精確指向表單視窗
+            GdipCreateFromHDC hdc, hGraphics
+    
+            ' 4. 建立畫刷並繪製矩形 (代表像素塊)
+            GdipCreateSolidFill argbColor, hBrush
+            ' 在表單座標 (50, 50) 畫一個 100x100 的方塊
+            GdipFillRectangle hGraphics, hBrush, 50, 50, 100, 100
+        Next c
+    Next R
+    ' 5. 清理資源 (重要！)
+    GdipDeleteBrush hBrush
+    GdipDeleteGraphics hGraphics
+    ReleaseDC 0, hdc
+    GdiplusShutdown uToken
+End Sub
